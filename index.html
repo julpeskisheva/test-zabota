@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Перенаправление на форму с опросом...</title>
+  <script>
+    // Название ключа в localStorage
+    const STORAGE_KEY = "juliia_abtest_group";
+
+    // Ссылки на формы для разных групп
+    const GROUP_URLS = {
+      control: "https://forms.yandex.ru/u/1234567890abcd",
+      experiment: "https://forms.yandex.ru/u/0987654321dcba"
+    };
+
+    // Попытка прочитать уже выбранную группу
+    const savedGroup = localStorage.getItem(STORAGE_KEY);
+
+    // Если группа уже выбрана — используем её
+    if (savedGroup && GROUP_URLS[savedGroup]) {
+      window.location.href = GROUP_URLS[savedGroup];
+    } else {
+      // Выбор новой группы случайным образом
+      const group = Math.random() < 0.5 ? "control" : "experiment";
+      localStorage.setItem(STORAGE_KEY, group);
+      window.location.href = GROUP_URLS[group];
+    }
+  </script>
+</head>
+<body>
+  <noscript>
+    <p>У вас отключён JavaScript. Пожалуйста, включите его для продолжения.</p>
+  </noscript>
+</body>
+</html>
